@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import "./CreatePlaylistPopupComponent.css";
-import { createPlaylistRequest } from "../../containers/auth/slice";
+import { createPlaylistRequest, getUser } from "../../containers/actions/actions"
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
-import { getUser } from "../../containers/auth/slice";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const CreatePlaylistPopupComponent: React.FC = () => {

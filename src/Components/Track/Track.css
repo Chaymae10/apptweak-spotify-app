@@ -1,0 +1,60 @@
+.track-container {
+  margin-bottom: 10px;
+  background-color: "#f4f4f4";
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.track-media-container {
+  position: relative;
+}
+
+.audio-controls button {
+  color: #2e7d32d9;
+}
+
+.details {
+  margin-top: 20px;
+}
+
+.track-info {
+  margin-top: 10px;
+}
+
+.title {
+  color: #2e7d32d9;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+
+@media (min-width: 600px) {
+  .track-card {
+    flex-direction: row;
+  }
+
+  .track-media-container {
+    width: 250px;
+  }
+
+  .track-content {
+    flex: 1;
+  }
+}
