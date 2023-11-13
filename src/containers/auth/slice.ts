@@ -1,7 +1,11 @@
 import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {  RequestStatus } from "../../types/requests";
 import { Playlist,AuthState, AccessTokenPayload } from "../../types/requests";
-import {getUser, getUserFailed, getUserSuccess, getUserPlaylistsFailed, getUserPlaylistsRequest, getUserPlaylistsSuccess, getPlaylistDetailsFailed, getPlaylistDetailsSuccess, getPlaylistTracksFailed, getPlaylistTracksSuccess, setDefaultPlaylist} from "../actions/actions";
+import {getUser, getUserFailed, getUserSuccess,
+   getUserPlaylistsFailed, getUserPlaylistsRequest, getUserPlaylistsSuccess,
+    getPlaylistDetailsFailed, getPlaylistDetailsSuccess, getPlaylistTracksFailed,
+     getPlaylistTracksSuccess,
+    removeTrackFromPlaylistFailed, removeTrackFromPlaylistSuccess, setSelectedPlaylist} from "../actions/actions";
 
 
 const SPOTIFY_SCOPE = [
@@ -19,7 +23,8 @@ const initialState: AuthState = {
   playlistCollection: { items: [] },
   playlistDetails: null,
   playlistTracks: { items: [] },
-  defaultPlaylist: null,
+  selectedPlaylist:null,
+  selectedPlaylistId: "",
 };
 
 
@@ -36,10 +41,10 @@ const authSlice = createSlice({
     setAccessToken(state, action: PayloadAction<AccessTokenPayload>) {
       state.accessToken = action.payload.accessToken;
       window.history.pushState({ REDIRECT_URI }, "", REDIRECT_URI);
-    },
-    setDefaultPlaylist: (state, action: PayloadAction<Playlist>) => {
-      state.defaultPlaylist = action.payload;
-    },
+    },setSelectedPlaylist: (state, action: PayloadAction<{ playlistId: string }>) => {
+      console.log('Reducer: Setting selectedPlaylistId to', action.payload.playlistId);
+      state.selectedPlaylistId = action.payload.playlistId;
+    },    
   },
   extraReducers: (builder) => {
     builder
@@ -53,8 +58,8 @@ const authSlice = createSlice({
       .addCase(getUserFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      }).addCase(setDefaultPlaylist, (state, action) => {
-        state.defaultPlaylist = action.payload;
+      }).addCase(setSelectedPlaylist, (state, action) => {
+        state.selectedPlaylist = action.payload;
       }) .addCase(getUserPlaylistsRequest, (state) => {
       })
       .addCase(getUserPlaylistsSuccess, (state, action) => {
@@ -82,7 +87,7 @@ const authSlice = createSlice({
       .addCase(getPlaylistTracksFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      });
+      })
       
   },
 });

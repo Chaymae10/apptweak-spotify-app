@@ -1,9 +1,8 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setDefaultPlaylist,
   getPlaylistTracksRequest,
-  getUserPlaylistsRequest,
+  getUserPlaylistsRequest, setSelectedPlaylist
 } from "./containers/actions/actions";
 import { authSelectors } from "./containers/auth/selectors";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,7 +14,6 @@ const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
   const user = useSelector(authSelectors.getUser);
   const playlists = useSelector(authSelectors.getPlaylists);
-  const defaultPlaylist = useSelector(authSelectors.getDefaultPlaylist);
   const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
@@ -33,8 +31,7 @@ const App: FC = (): ReactElement => {
       );
 
       if (nonEmptyPlaylist && nonEmptyPlaylist.id) {
-        dispatch(setDefaultPlaylist(nonEmptyPlaylist));
-        // Vous pouvez également déclencher une action pour obtenir les tracks de cette playlist ici
+        dispatch(setSelectedPlaylist(nonEmptyPlaylist));
         dispatch(getPlaylistTracksRequest({ playlistId: nonEmptyPlaylist.id }));
       }
     }
