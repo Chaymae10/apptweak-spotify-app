@@ -9,12 +9,44 @@ import "./Track.css";
 import ReactH5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { TrackDetails } from "../../types/requests";
+import DeleteConfirmationDialog from "./../DeleteConfirmationPopup/DeleteConfirmationPopup";
+import { useDispatch, useSelector } from "react-redux";
+import { authSelectors } from "../../containers/auth/selectors";
+import { removeTrackFromPlaylistRequest } from "../../containers/actions/actions";
 
 const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const dispatch = useDispatch();
+  const selectedPlaylist = useSelector(authSelectors.getSelectedPlaylist);
+  const authenticatedUserId = useSelector(authSelectors.getUser)?.userId;
+
+  const isOwnerPlaylist = selectedPlaylist && selectedPlaylist.owner && selectedPlaylist.owner.id === authenticatedUserId;
+
+  const handleDeleteConfirm = (trackURI: string) => {
+    setDeleteDialogOpen(false);
+    if (
+      selectedPlaylist &&
+      selectedPlaylist.id &&
+      selectedPlaylist.snapshot_id
+    ) {
+      dispatch(
+        removeTrackFromPlaylistRequest({
+          playlistId: selectedPlaylist.id,
+          trackURI: trackURI,
+          snapshotId: selectedPlaylist.snapshot_id,
+        })
+      );
+    }
+  };
 
   const handleDeleteClick = () => {
-    console.log("ID de la piste à supprimer :", track.id);
+    setDeleteDialogOpen(true);
   };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+  };
+
 
   return (
     <Card className="track-card">
@@ -24,7 +56,7 @@ const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
             component="img"
             image={track.album.images[0].url}
             alt={track.name}
-            style={{ width: 250, height: 250, objectFit: "contain" }}
+            style={{ width: 250, height: 250, objectFit: "contain"}}
           />
         </a>
         <div className="audio-controls">
@@ -60,11 +92,19 @@ const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
           </div>
         </div>
         <div className="delete-icon">
-        <IconButton onClick={handleDeleteClick} color="error" size="large">
-          <CancelIcon />
-        </IconButton>
-      </div>
+          {isOwnerPlaylist && (
+            <IconButton onClick={handleDeleteClick} color="error" size="large">
+              <CancelIcon />
+            </IconButton>
+          )}
+        </div>
       </CardContent>
+
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onCancel={handleDeleteCancel}
+        onConfirm={() => handleDeleteConfirm(track.uri)}
+      />
     </Card>
   );
 };

@@ -17,13 +17,6 @@ const CreatePlaylistPopupComponent: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  //get data of user in each time the modal is opened
-  useEffect(() => {
-    if (isModalOpen) {
-      dispatch(getUser());
-    }
-  }, [dispatch, isModalOpen]);
-
   const openModal = () => {
     setIsModalOpen(true);
     setError(null);

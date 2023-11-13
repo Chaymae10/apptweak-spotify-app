@@ -11,6 +11,7 @@ export const authSelectors = {
   getPlaylists: createSelector(selectSelf, (auth) => auth.playlistCollection),
   getPlaylistDetails : createSelector(selectSelf, (auth) => auth.playlistDetails),
   getPlaylistTracks : createSelector(selectSelf, (auth) => auth.playlistTracks),
-  getDefaultPlaylist: createSelector(selectSelf, (auth) => auth.defaultPlaylist),
+  getSelectedPlaylistId: createSelector(selectSelf, (auth) => auth.selectedPlaylistId),
+  getSelectedPlaylist: createSelector(selectSelf, (auth) => auth.selectedPlaylist),
   
 };

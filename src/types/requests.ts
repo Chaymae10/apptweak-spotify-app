@@ -6,18 +6,19 @@ export enum RequestStatus {
 }
 
 export type ErrorPayload = {
-  message: string
-}
+  message: string;
+};
 
 export interface AxiosOptions {
   accessToken?: string;
   baseURL?: string;
 }
 
-export interface User {
-  userId?: string;
-  userName?: string;
+export interface AccessTokenPayload {
+  accessToken: string;
 }
+
+/////////////////////////////////// User //////////////////////////////////
 
 export interface AuthState {
   accessToken?: string;
@@ -27,12 +28,17 @@ export interface AuthState {
   error?: string;
   playlistDetails: Playlist | null;
   playlistTracks: PlaylistTrackCollection;
-  defaultPlaylist: Playlist | null;
+  selectedPlaylist: Playlist | null;
+  selectedPlaylistId: string ;
 }
 
-export interface AccessTokenPayload {
-  accessToken: string;
+export interface User {
+  userId?: string;
+  userName?: string;
 }
+
+
+/////////////////////////////////// Playlist //////////////////////////////////
 
 export interface PlaylistCollection {
   items: Playlist[];
@@ -42,10 +48,17 @@ export interface Playlist {
   name: string;
   description?: string;
   id?: string;
-  tracks?: PlaylistTrackCollection;//liste album qu'on affiche
+  tracks?: PlaylistTrackCollection; 
+  snapshot_id?: string;
+  owner?: PlaylistOwner;
 }
 
+export interface PlaylistOwner {
+  id: string;
+  display_name: string;
+}
 
+/////////////////////////////////// Track //////////////////////////////////
 export interface PlaylistTrackCollection {
   items: Track[]; // la liste des albums appartenant à chaque playlist
   total?: number; // le nombre de pistes appartenant à chaque playlist
@@ -56,25 +69,22 @@ export interface Track {
   track: TrackDetails;
 }
 
-
 export interface TrackDetails {
   id: string;
   album: Album;
   artists: Artist[];
   name: string;
-  duration_ms:  number;
+  duration_ms: number;
   popularity: number;
   external_urls: ExternalUrls;
   href: string;
   uri: string;
-  preview_url : string;
+  preview_url: string;
 }
 
 export interface ExternalUrls {
   spotify: string;
 }
-
-
 
 export interface Album {
   id: string;
@@ -82,9 +92,8 @@ export interface Album {
   images: Image[];
   release_date: string;
   total_tracks: number;
-  available_markets?: string[]; 
+  available_markets?: string[];
   uri: string;
-
 }
 
 export interface Image {
@@ -97,6 +106,3 @@ export interface Artist {
   id: string;
   name: string;
 }
-
-
-

@@ -10,6 +10,8 @@ import {
   getPlaylistDetailsFailed,
   getPlaylistTracksFailed,
   getPlaylistTracksSuccess,
+  removeTrackFromPlaylistSuccess,
+  removeTrackFromPlaylistFailed,
 } from "../containers/actions/actions";
 
 /**
@@ -159,9 +161,66 @@ function* watchGetPlaylistTracksSaga() {
   yield takeEvery("auth/getPlaylistTracksRequest", getPlaylistTracksSaga);
 }
 
+function* removeTrackFromPlaylistSaga(action: any): Generator<any, void, any> {
+  try {
+    const { playlistId, trackURI, snapshotId } = action.payload;
+    const accessToken = yield select(authSelectors.getAccessToken);
+    console.log("Playlist id:", playlistId, "Track id:", trackURI, "Snapshot id:", snapshotId);
+    
+    const request = async () => {
+      const response = await axios.delete(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          data: {
+            tracks: [
+              {
+                uri: trackURI,
+              },
+            ],
+            snapshot_id: snapshotId,
+          },
+        }
+      );
+      
+      return response.data;
+    };
+
+    const apiResponse: any = yield call(request);
+    console.log("API response:", apiResponse)
+
+    // Vérifiez si la suppression a réussi en fonction de la réponse de l'API
+    if (apiResponse.snapshot_id) {
+      // Dispatch the success action
+      yield put(removeTrackFromPlaylistSuccess());
+      yield call(getPlaylistTracksSaga, { payload: { playlistId } });
+      console.log("Success");
+    } else {
+      // Si la suppression a échoué, dispatchez l'action d'échec avec un message approprié
+      yield put(removeTrackFromPlaylistFailed({ message: "La suppression a échoué." }));
+    }
+  } catch (error: any) {
+    console.error('Error removing track from playlist:', error);
+    // Dispatch the failure action with the error message
+    yield put(removeTrackFromPlaylistFailed({ message: error.message }));
+  }
+}
+
+// Watcher saga that monitors the "auth/removeTrackFromPlaylistRequest" action
+// and triggers removeTrackFromPlaylistSaga accordingly.
+function* watchRemoveTrackFromPlaylistSaga() {
+  yield takeEvery('auth/removeTrackFromPlaylistRequest', removeTrackFromPlaylistSaga);
+}
+
+
+
 export {
   watchCreatePlaylistSaga,
   watchGetUserPlaylistsSaga,
   watchGetPlaylistDetailsSaga,
   watchGetPlaylistTracksSaga,
+  watchRemoveTrackFromPlaylistSaga,
 };
