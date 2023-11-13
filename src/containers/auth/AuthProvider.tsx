@@ -2,7 +2,8 @@ import React, { FC, ReactNode, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { authSelectors } from "./selectors";
-import { getUser, login, setAccessToken } from "./slice";
+import {login, setAccessToken } from "./slice";
+import {getUser} from "../actions/actions";
 
 type AuthProviderProps = {
   children: ReactNode;

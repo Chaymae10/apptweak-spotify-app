@@ -1,25 +1,31 @@
-import React, { FC, ReactElement, ChangeEvent, useState } from "react";
-import { PlaylistItem } from "../../containers/auth/slice";
+import React, { FC, ReactElement, useState, useEffect } from "react";
+import { getPlaylistDetailsRequest, getPlaylistTracksRequest } from "../../containers/actions/actions";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Box from "@mui/material/Box";
 import "./PlaylistComponent.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { authSelectors } from "../../containers/auth/selectors";
 
-interface PlaylistListProps {
-  playlistList: PlaylistItem[];
-}
-
-const PlaylistList: FC<PlaylistListProps> = ({
-  playlistList,
-}): ReactElement => {
+const PlaylistList: FC = (): ReactElement => {
   const [selectedPlaylist, setSelectedPlaylist] = useState("");
+  const dispatch = useDispatch();
+  const playlists = useSelector(authSelectors.getPlaylists);
 
-  const handleChange = (event: any) => {
-    setSelectedPlaylist(event.target.value as string);
-    console.log("Selected Playlist ID:", event.target.value);
+  const handleChange = async (event: any) => {
+    const playlistId = event.target.value as string;
+    setSelectedPlaylist(playlistId);
+    dispatch(getPlaylistDetailsRequest({ playlistId }));
+    dispatch(getPlaylistTracksRequest({ playlistId }));
   };
+
+  useEffect(() => {
+    if (selectedPlaylist) {
+      dispatch(getPlaylistDetailsRequest({ playlistId: selectedPlaylist }));
+      dispatch(getPlaylistTracksRequest({ playlistId: selectedPlaylist }));
+    }
+  }, [dispatch, selectedPlaylist]);
 
   return (
     <div className="playlist-container">
@@ -31,7 +37,7 @@ const PlaylistList: FC<PlaylistListProps> = ({
           label="Select a playlist"
           value={selectedPlaylist}
         >
-          {playlistList.map((playlist) => (
+          {playlists.items.map((playlist) => (
             <MenuItem key={playlist.id} value={playlist.id}>
               {playlist.name}
             </MenuItem>
