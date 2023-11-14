@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { Playlist, PlaylistCollection, PlaylistTrackCollection, User, ErrorPayload } from "../../types/requests";
+import { Playlist, PlaylistCollection, PlaylistTrackCollection, User, ErrorPayload, Track, TrackDetails } from "../../types/requests";
 
 export const getUser = createAction("auth/getUser");
 export const getUserSuccess = createAction<User>("auth/getUserSuccess");
@@ -30,5 +30,22 @@ export const removeTrackFromPlaylistRequest = createAction<{ playlistId: string;
   export const removeTrackFromPlaylistFailed = createAction<ErrorPayload>(
     'auth/removeTrackFromPlaylistFailed'
   );
+
+  export const searchTracksByNameRequest = createAction(
+    'auth/searchTracksByNameRequest',
+    (trackName: string) => ({ payload: { trackName } })
+  );
+  
+  export const searchTracksByNameSuccess = createAction(
+    'auth/searchTracksByNameSuccess',
+    (searchResults: TrackDetails[]) => ({ payload: { searchResults } })
+  );
+  
+  export const searchTracksByNameFailed = createAction(
+    'auth/searchTracksByNameFailed',
+    (error: any) => ({ payload: { error } })
+  );
+
+  export const clearSearchResults = createAction('CLEAR_SEARCH_RESULTS');
 
 

@@ -12,6 +12,8 @@ import {
   getPlaylistTracksSuccess,
   removeTrackFromPlaylistSuccess,
   removeTrackFromPlaylistFailed,
+  searchTracksByNameSuccess,
+  searchTracksByNameFailed
 } from "../containers/actions/actions";
 
 /**
@@ -217,10 +219,40 @@ function* watchRemoveTrackFromPlaylistSaga() {
 
 
 
+function* searchTracksByNameSaga(action: any): Generator<any, void, any> {
+  try {
+    const { trackName } = action.payload;
+    const accessToken = yield select(authSelectors.getAccessToken);
+
+    const searchResults = yield call(() =>
+      axios.get(`https://api.spotify.com/v1/search?q=${trackName}&type=track`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+    );
+
+    console.log("Search results1:", searchResults.data.tracks);
+    console.log("Search resultsItem:", searchResults.data.tracks.items);
+
+
+    yield put(searchTracksByNameSuccess(searchResults.data.tracks.items));
+  } catch (error: any) {
+    console.error("Error searching tracks by name:", error);
+    yield put(searchTracksByNameFailed({ message: error.message }));
+  }
+}
+
+function* watchSearchTracksByNameSaga() {
+  yield takeEvery('auth/searchTracksByNameRequest', searchTracksByNameSaga);
+}
+
 export {
   watchCreatePlaylistSaga,
   watchGetUserPlaylistsSaga,
   watchGetPlaylistDetailsSaga,
   watchGetPlaylistTracksSaga,
   watchRemoveTrackFromPlaylistSaga,
+  watchSearchTracksByNameSaga,
 };

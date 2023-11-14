@@ -5,22 +5,27 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from "@mui/icons-material/Cancel";
-import "./Track.css";
+import "./TrackComponent.css";
 import ReactH5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { TrackDetails } from "../../types/requests";
-import DeleteConfirmationDialog from "./../DeleteConfirmationPopup/DeleteConfirmationPopup";
+import DeleteConfirmationDialog from "../DeleteConfirmationPopup/DeleteConfirmationPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
 import { removeTrackFromPlaylistRequest } from "../../containers/actions/actions";
 
-const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
+const TrackComponent: FC<{ track: TrackDetails }> = ({
+  track,
+}): ReactElement => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const dispatch = useDispatch();
   const selectedPlaylist = useSelector(authSelectors.getSelectedPlaylist);
   const authenticatedUserId = useSelector(authSelectors.getUser)?.userId;
 
-  const isOwnerPlaylist = selectedPlaylist && selectedPlaylist.owner && selectedPlaylist.owner.id === authenticatedUserId;
+  const isOwnerPlaylist =
+    selectedPlaylist &&
+    selectedPlaylist.owner &&
+    selectedPlaylist.owner.id === authenticatedUserId;
 
   const handleDeleteConfirm = (trackURI: string) => {
     setDeleteDialogOpen(false);
@@ -47,7 +52,6 @@ const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
     setDeleteDialogOpen(false);
   };
 
-
   return (
     <Card className="track-card">
       <div className="track-media-container">
@@ -56,7 +60,7 @@ const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
             component="img"
             image={track.album.images[0].url}
             alt={track.name}
-            style={{ width: 250, height: 250, objectFit: "contain"}}
+            style={{ width: 250, height: 250, objectFit: "contain" }}
           />
         </a>
         <div className="audio-controls">
@@ -109,4 +113,4 @@ const Track: FC<{ track: TrackDetails }> = ({ track }): ReactElement => {
   );
 };
 
-export default Track;
+export default TrackComponent;

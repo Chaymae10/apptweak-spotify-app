@@ -1,12 +1,23 @@
-import {  createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {  RequestStatus } from "../../types/requests";
-import { Playlist,AuthState, AccessTokenPayload } from "../../types/requests";
-import {getUser, getUserFailed, getUserSuccess,
-   getUserPlaylistsFailed, getUserPlaylistsRequest, getUserPlaylistsSuccess,
-    getPlaylistDetailsFailed, getPlaylistDetailsSuccess, getPlaylistTracksFailed,
-     getPlaylistTracksSuccess,
-    removeTrackFromPlaylistFailed, removeTrackFromPlaylistSuccess, setSelectedPlaylist} from "../actions/actions";
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RequestStatus } from "../../types/requests";
+import { Playlist, AuthState, AccessTokenPayload } from "../../types/requests";
+import {
+  getUser,
+  getUserFailed,
+  getUserSuccess,
+  getUserPlaylistsFailed,
+  getUserPlaylistsRequest,
+  getUserPlaylistsSuccess,
+  getPlaylistDetailsFailed,
+  getPlaylistDetailsSuccess,
+  getPlaylistTracksFailed,
+  getPlaylistTracksSuccess,
+  setSelectedPlaylist,
+  searchTracksByNameFailed,
+  searchTracksByNameRequest,
+  searchTracksByNameSuccess,
+  clearSearchResults,
+} from "../actions/actions";
 
 const SPOTIFY_SCOPE = [
   "user-read-email",
@@ -23,10 +34,10 @@ const initialState: AuthState = {
   playlistCollection: { items: [] },
   playlistDetails: null,
   playlistTracks: { items: [] },
-  selectedPlaylist:null,
+  selectedPlaylist: null,
   selectedPlaylistId: "",
+  searchResults: [],
 };
-
 
 const authSlice = createSlice({
   name: "authentication",
@@ -41,10 +52,20 @@ const authSlice = createSlice({
     setAccessToken(state, action: PayloadAction<AccessTokenPayload>) {
       state.accessToken = action.payload.accessToken;
       window.history.pushState({ REDIRECT_URI }, "", REDIRECT_URI);
-    },setSelectedPlaylist: (state, action: PayloadAction<{ playlistId: string }>) => {
-      console.log('Reducer: Setting selectedPlaylistId to', action.payload.playlistId);
+    },
+    setSelectedPlaylist: (
+      state,
+      action: PayloadAction<{ playlistId: string }>
+    ) => {
+      console.log(
+        "Reducer: Setting selectedPlaylistId to",
+        action.payload.playlistId
+      );
       state.selectedPlaylistId = action.payload.playlistId;
-    },    
+    },
+    clearSearchResults: (state) => {
+      state.searchResults = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -58,10 +79,11 @@ const authSlice = createSlice({
       .addCase(getUserFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      }).addCase(setSelectedPlaylist, (state, action) => {
-        state.selectedPlaylist = action.payload;
-      }) .addCase(getUserPlaylistsRequest, (state) => {
       })
+      .addCase(setSelectedPlaylist, (state, action) => {
+        state.selectedPlaylist = action.payload;
+      })
+      .addCase(getUserPlaylistsRequest, (state) => {})
       .addCase(getUserPlaylistsSuccess, (state, action) => {
         state.playlistCollection = action.payload;
         state.status = RequestStatus.SUCCESS;
@@ -71,7 +93,8 @@ const authSlice = createSlice({
         state.playlistCollection = { items: [] };
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      }).addCase(getPlaylistDetailsSuccess, (state, action) => {
+      })
+      .addCase(getPlaylistDetailsSuccess, (state, action) => {
         state.playlistDetails = action.payload;
         state.status = RequestStatus.SUCCESS;
         state.error = undefined;
@@ -79,7 +102,8 @@ const authSlice = createSlice({
       .addCase(getPlaylistDetailsFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
-      }).addCase(getPlaylistTracksSuccess, (state, action) => {
+      })
+      .addCase(getPlaylistTracksSuccess, (state, action) => {
         state.playlistTracks = action.payload;
         state.status = RequestStatus.SUCCESS;
         state.error = undefined;
@@ -88,7 +112,12 @@ const authSlice = createSlice({
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
       })
-      
+      .addCase(searchTracksByNameSuccess, (state, action) => {
+        state.searchResults = action.payload.searchResults; // Assurez-vous que le payload correspond à vos données de piste
+      })
+      .addCase(clearSearchResults, (state) => {
+        state.searchResults = [];
+      });
   },
 });
 

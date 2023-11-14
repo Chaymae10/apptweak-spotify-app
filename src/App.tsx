@@ -2,13 +2,15 @@ import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPlaylistTracksRequest,
-  getUserPlaylistsRequest, setSelectedPlaylist
+  getUserPlaylistsRequest,
+  setSelectedPlaylist,
 } from "./containers/actions/actions";
 import { authSelectors } from "./containers/auth/selectors";
 import CircularProgress from "@mui/material/CircularProgress";
-import CreatePlaylistPopupComponent from "./Components/CreatePlaylistPopupComponent/CreatePlaylistPopupComponent";
-import PlaylistComponent from "./Components/PlaylistComponent/PlaylistComponent";
+import CreatePlaylistPopup from "./Components/CreatePlaylistPopup/CreatePlaylistPopup";
+import PlaylistComponent from "./Components/SelectorPlaylists/SelectorPlaylists";
 import TrackList from "./Components/TrackList/TrackList";
+import Navbar from "./Components/Navbar/Navbar";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
@@ -52,7 +54,8 @@ const App: FC = (): ReactElement => {
         minHeight: "100vh",
       }}
     >
-      <CreatePlaylistPopupComponent />
+      <Navbar />
+      <CreatePlaylistPopup />
       <PlaylistComponent />
       {showSpinner && (
         <div
