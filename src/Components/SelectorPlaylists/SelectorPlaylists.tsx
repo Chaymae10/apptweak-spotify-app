@@ -2,11 +2,11 @@ import React, { FC, ReactElement, useState, useEffect } from "react";
 import { getPlaylistDetailsRequest, getPlaylistTracksRequest, setSelectedPlaylist } from "../../containers/actions/actions";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import "./PlaylistComponent.css";
+import "./SelectorPlaylists.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { authSelectors } from "../../containers/auth/selectors";
 
-const PlaylistList: FC = (): ReactElement => {
+const SelectorPlaylists: FC = (): ReactElement => {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState("");
   const dispatch = useDispatch();
   const playlists = useSelector(authSelectors.getPlaylists);
@@ -47,4 +47,4 @@ const PlaylistList: FC = (): ReactElement => {
   );
 };
 
-export default PlaylistList;
+export default SelectorPlaylists;

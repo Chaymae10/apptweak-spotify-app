@@ -30,6 +30,7 @@ export interface AuthState {
   playlistTracks: PlaylistTrackCollection;
   selectedPlaylist: Playlist | null;
   selectedPlaylistId: string ;
+  searchResults: TrackDetails[];
 }
 
 export interface User {
@@ -42,6 +43,7 @@ export interface User {
 
 export interface PlaylistCollection {
   items: Playlist[];
+
 }
 export interface Playlist {
   userId: string;
@@ -60,7 +62,7 @@ export interface PlaylistOwner {
 
 /////////////////////////////////// Track //////////////////////////////////
 export interface PlaylistTrackCollection {
-  items: Track[]; // la liste des albums appartenant à chaque playlist
+  items: Track[]; // la liste des tracks appartenant à chaque playlist
   total?: number; // le nombre de pistes appartenant à chaque playlist
 }
 

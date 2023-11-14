@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import "./CreatePlaylistPopupComponent.css";
-import { createPlaylistRequest, getUser } from "../../containers/actions/actions"
+import "./CreatePlaylistPopup.css";
+import {
+  createPlaylistRequest,
+  getUser,
+} from "../../containers/actions/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
-const CreatePlaylistPopupComponent: React.FC = () => {
+const CreatePlaylistPopup: React.FC = () => {
   const user = useSelector(authSelectors.getUser);
   const dispatch = useDispatch();
 
@@ -54,7 +57,7 @@ const CreatePlaylistPopupComponent: React.FC = () => {
           variant="contained"
           onClick={openModal}
           text="Add new playlist"
-          color="success"
+          className="createButton"
         />
       </div>
 
@@ -106,4 +109,4 @@ const CreatePlaylistPopupComponent: React.FC = () => {
   );
 };
 
-export default CreatePlaylistPopupComponent;
+export default CreatePlaylistPopup;
