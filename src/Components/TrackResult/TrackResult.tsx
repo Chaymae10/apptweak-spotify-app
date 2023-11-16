@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { TrackDetails } from "../../types/requests";
+import { TrackDetails } from "../../types/trackTypes";
 import "./TrackResult.css";
 
 interface TrackResultProps {

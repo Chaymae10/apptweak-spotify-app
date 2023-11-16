@@ -3,7 +3,7 @@ import axios from "axios";
 import { call, put, select, takeEvery } from "@redux-saga/core/effects";
 
 import { authSelectors } from "./selectors";
-import { getUser, getUserFailed, getUserSuccess } from "./../actions/actions";
+import { getUser, getUserFailed, getUserSuccess } from "../auth/actions";
 
 function* getUserIdSaga() {
   try {

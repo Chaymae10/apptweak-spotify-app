@@ -3,14 +3,14 @@ import List from "@mui/material/List";
 import Alert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
 import { useSelector } from "react-redux";
-import { authSelectors } from "../../containers/auth/selectors";
 import TrackComponent from "../TrackComponent/TrackComponent";
+import { trackSelectors } from "../../containers/Track/selectors";
 import "./TrackList.css";
 
 const TrackList: FC = (): ReactElement => {
-  //Pagination
-  const playlistTracks = useSelector(authSelectors.getPlaylistTracks);
+  const playlistTracks = useSelector(trackSelectors.getPlaylistTracks);
 
+  /////////////////////////// Pagination ///////////////////////////
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -23,26 +23,19 @@ const TrackList: FC = (): ReactElement => {
 
   const totalPages = Math.ceil(playlistTracks.items.length / itemsPerPage);
 
-  const hasTracks = currentItems.length > 0;
-
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setCurrentPage(value);
   };
+  /////////////////////////// Pagination ///////////////////////////
+
+  const hasTracks = currentItems.length > 0;
 
   return (
     <div className="list-tracker">
-      {hasTracks && (
-        <List>
-          {currentItems.map((playlistItem, index) => (
-            <TrackComponent key={index} track={playlistItem.track} />
-          ))}
-        </List>
-      )}
-
-      {!hasTracks && (
+      {!hasTracks && playlistTracks.total == 0 && (
         <Alert
           severity="success"
           style={{
@@ -51,6 +44,14 @@ const TrackList: FC = (): ReactElement => {
         >
           There are no tracks added to this playlist at the moment
         </Alert>
+      )}
+
+      {hasTracks && (
+        <List>
+          {currentItems.map((playlistItem, index) => (
+            <TrackComponent key={index} track={playlistItem.track} />
+          ))}
+        </List>
       )}
 
       {totalPages > 1 && (

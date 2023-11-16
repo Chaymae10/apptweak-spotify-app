@@ -4,8 +4,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogActions from '@mui/material/DialogActions';
-import ButtonComponent from './../ButtonComponent/ButtonComponent';
-import WarningAmberIcon  from '@mui/icons-material/WarningAmber';
+import Button from '@mui/material/Button';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import "./DeleteConfirmationPopup.css";
 
 interface DeleteConfirmationDialogProps {
@@ -22,26 +22,20 @@ const DeleteConfirmationDialog: FC<DeleteConfirmationDialogProps> = ({
   return (
     <Dialog open={isOpen} onClose={onCancel}>
       <DialogTitle className='dialog-title'>
-      <WarningAmberIcon  style={{ fontSize: 40}} />
+        <WarningAmberIcon style={{ fontSize: 40 }} />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-        Are you sure you want to delete this track? This action is irreversible.
+          Are you sure you want to delete this track? This action is irreversible.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <ButtonComponent
-          onClick={onCancel}
-          variant="outlined"
-          color="success" 
-          text="Cancel"
-        />
-        <ButtonComponent
-          onClick={onConfirm}
-          variant="contained"
-          color="error"
-          text="Delete"
-        />
+        <Button onClick={onCancel} variant="outlined" color="success">
+          Cancel
+        </Button>
+        <Button onClick={onConfirm} variant="contained" color="error">
+          Delete
+        </Button>
       </DialogActions>
     </Dialog>
   );

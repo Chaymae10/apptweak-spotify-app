@@ -3,10 +3,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import "./CreatePlaylistPopup.css";
-import {
-  createPlaylistRequest,
-  getUser,
-} from "../../containers/actions/actions";
+import { createPlaylistRequest } from "../../containers/Playlist/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
@@ -19,6 +16,12 @@ const CreatePlaylistPopup: React.FC = () => {
   const [playlistDescription, setPlaylistDescription] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const playlistData = {
+    userId: user?.userId || "",
+    name: playlistName,
+    description: playlistDescription,
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,15 +38,7 @@ const CreatePlaylistPopup: React.FC = () => {
       setError("Playlist name is required");
       return;
     }
-
-    const playlistData = {
-      userId: user?.userId || "",
-      name: playlistName,
-      description: playlistDescription,
-    };
-
     dispatch(createPlaylistRequest(playlistData));
-
     setPlaylistName("");
     setPlaylistDescription("");
     setError("");

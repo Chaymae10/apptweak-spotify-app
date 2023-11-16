@@ -5,7 +5,7 @@ type AllowedColors = "error" | "inherit" | "primary" | "secondary" | "success" |
 
 interface ButtonComponentProps {
   onClick: () => void;
-  variant?: "text" | "outlined" | "contained";
+  variant?: "outlined" | "contained";
   className?: string;
   color?: AllowedColors;
   text: string;
@@ -13,7 +13,7 @@ interface ButtonComponentProps {
 
 const ButtonComponent: React.FC<ButtonComponentProps> = ({
   onClick,
-  variant = "contained",
+  variant,
   className,
   color,
   text,
@@ -33,4 +33,3 @@ const ButtonComponent: React.FC<ButtonComponentProps> = ({
 };
 
 export default ButtonComponent;
-
