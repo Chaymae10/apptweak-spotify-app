@@ -15,8 +15,9 @@
 }
 
 .audio-controls button {
-  color: #2e7d32d9;
+  color: #6e50c2;
 }
+
 
 .details {
   margin-top: 20px;
@@ -27,7 +28,7 @@
 }
 
 .title {
-  color: #2e7d32d9;
+  color: #6e50c2 !important;
   font-weight: bold;
 }
 
