@@ -67,7 +67,6 @@ const CreatePlaylistPopup: React.FC = () => {
             fullWidth
             margin="normal"
             className="inputField"
-            color="success"
             error={!!error}
             helperText={error}
           />
@@ -79,7 +78,7 @@ const CreatePlaylistPopup: React.FC = () => {
             fullWidth
             margin="normal"
             className="inputField"
-            color="success"
+            color="secondary"
           />
           <div className="buttonsContainer">
             <ButtonComponent
@@ -87,7 +86,7 @@ const CreatePlaylistPopup: React.FC = () => {
               onClick={closeModal}
               text="Cancel"
               className="cancelButton"
-              color="success"
+              color="secondary"
             />
 
             <ButtonComponent
@@ -95,7 +94,7 @@ const CreatePlaylistPopup: React.FC = () => {
               onClick={handleCreatePlaylist}
               text="Create"
               className="createButton"
-              color="success"
+              color="secondary"
             />
           </div>
         </Box>

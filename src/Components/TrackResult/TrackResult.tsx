@@ -36,7 +36,7 @@ const TrackResult: React.FC<TrackResultProps> = ({ trackFound, handleClick, isOw
         <Tooltip arrow title={isOwnerPlaylist ? "" : "You cannot add track to this playlist"}>
           <span>
             <IconButton
-              style={{ color: isOwnerPlaylist ? "#1db954" : "gray" }}
+              style={{ color: isOwnerPlaylist ? "#6e50c2" : "gray" }}
               aria-label="Add to playlist"
               onClick={() => handleClick()}
               disabled={!isOwnerPlaylist}

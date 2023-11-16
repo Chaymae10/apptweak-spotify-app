@@ -30,7 +30,7 @@ const DeleteConfirmationDialog: FC<DeleteConfirmationDialogProps> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} variant="outlined" color="success">
+        <Button onClick={onCancel} variant="outlined" color="secondary">
           Cancel
         </Button>
         <Button onClick={onConfirm} variant="contained" color="error">

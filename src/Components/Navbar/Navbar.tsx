@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SearchBarComponent from "../SearchBar/SearchBar";
 import "./Navbar.css";
+import logo  from "../../img/logo.png";
+
 
 const Navbar: FC = (): ReactElement => {
   return (
@@ -13,7 +15,7 @@ const Navbar: FC = (): ReactElement => {
      className="appBar"
     >
       <Toolbar>
-        <Typography variant="h6" >Spotify Logo</Typography>
+      <img src={logo} alt="Logo" className="logo"/>
 
         <div className="searchBar">
           <SearchBarComponent />
