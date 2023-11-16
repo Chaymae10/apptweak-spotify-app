@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { authSelectors } from "./selectors";
 import {login, setAccessToken } from "./slice";
-import {getUser} from "../actions/actions";
+import {getUser} from "../../containers/auth/actions";
 
 type AuthProviderProps = {
   children: ReactNode;

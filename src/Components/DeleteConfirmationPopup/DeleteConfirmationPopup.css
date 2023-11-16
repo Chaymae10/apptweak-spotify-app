@@ -1,14 +1,42 @@
 .dialog-title {
-     color: #f50057;
-     text-align: center;
-     font-size: 50px;
-}
-
-.warning-icon{
+    color: #f50057;
+    text-align: center;
     font-size: 50px;
 }
 
-.text-dialog {
-    text-align: center;
+.warning-icon{
+   font-size: 50px;
 }
 
+.text-dialog {
+   text-align: center;
+}
+
+.modal-container {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 400px;
+   background-color: #fff;
+   border: 1px solid #ccc;
+   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+   border-radius: 8px;
+   padding: 16px;
+   text-align: center;
+ }
+ 
+ .dialog-content {
+   margin: 16px 0;
+ }
+ 
+ .dialog-actions {
+   display: flex;
+   justify-content: center;
+   margin-top: 16px;
+ }
+ 
+ .dialog-actions button {
+   margin: 0 8px;
+ }
+ 

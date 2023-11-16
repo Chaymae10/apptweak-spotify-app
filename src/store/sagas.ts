@@ -1,9 +1,8 @@
 import { all } from "@redux-saga/core/effects";
 
 import authSaga from "../containers/auth/authSagas";
-import { watchCreatePlaylistSaga, watchGetUserPlaylistsSaga, 
-  watchGetPlaylistDetailsSaga, watchGetPlaylistTracksSaga, 
-  watchRemoveTrackFromPlaylistSaga, watchSearchTracksByNameSaga} from "../Business/apiService";
+import {watchRemoveTrackFromPlaylistSaga, watchSearchTracksByNameSaga, watchGetPlaylistTracksSaga} from "../containers/Track/TrackSagas";
+  import { watchCreatePlaylistSaga, watchGetUserPlaylistsSaga, watchGetPlaylistDetailsSaga } from "../containers/Playlist/PlaylistSagas";
 
 export default function* rootSaga() {
   yield all([

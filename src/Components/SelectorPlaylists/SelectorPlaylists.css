@@ -1,11 +1,9 @@
 .select {
-    width: 300px; 
-  }
+  width: 300px; 
+}
 
 .playlist-container {
-    border-radius: 8px;
-    margin-bottom: 16px;
-    margin-left: 50px; 
-  }
-  
-  
+  border-radius: 8px;
+  margin-bottom: 16px;
+  margin-left: 50px; 
+}

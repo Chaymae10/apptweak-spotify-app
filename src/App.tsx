@@ -1,21 +1,21 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getPlaylistTracksRequest,
   getUserPlaylistsRequest,
   setSelectedPlaylist,
-} from "./containers/actions/actions";
+} from "./containers/Playlist/actions";
+import { getPlaylistTracksRequest } from "./containers/Track/actions";
 import { authSelectors } from "./containers/auth/selectors";
 import CircularProgress from "@mui/material/CircularProgress";
 import CreatePlaylistPopup from "./Components/CreatePlaylistPopup/CreatePlaylistPopup";
 import PlaylistComponent from "./Components/SelectorPlaylists/SelectorPlaylists";
 import TrackList from "./Components/TrackList/TrackList";
 import Navbar from "./Components/Navbar/Navbar";
+import {playlistSelectors} from "./containers/Playlist/selectors";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
-  const user = useSelector(authSelectors.getUser);
-  const playlists = useSelector(authSelectors.getPlaylists);
+  const playlists = useSelector(playlistSelectors.getPlaylists);
   const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const App: FC = (): ReactElement => {
       );
 
       if (nonEmptyPlaylist && nonEmptyPlaylist.id) {
-        dispatch(setSelectedPlaylist(nonEmptyPlaylist));
+       dispatch(setSelectedPlaylist(nonEmptyPlaylist));
         dispatch(getPlaylistTracksRequest({ playlistId: nonEmptyPlaylist.id }));
       }
     }

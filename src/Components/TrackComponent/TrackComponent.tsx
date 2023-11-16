@@ -8,18 +8,19 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import "./TrackComponent.css";
 import ReactH5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { TrackDetails } from "../../types/requests";
+import { TrackDetails } from "../../types/trackTypes";
 import DeleteConfirmationDialog from "../DeleteConfirmationPopup/DeleteConfirmationPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
-import { removeTrackFromPlaylistRequest } from "../../containers/actions/actions";
+import { removeTrackFromPlaylistRequest } from "../../containers/Track/actions";
+import { playlistSelectors } from "../../containers/Playlist/selectors";
 
 const TrackComponent: FC<{ track: TrackDetails }> = ({
   track,
 }): ReactElement => {
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const dispatch = useDispatch();
-  const selectedPlaylist = useSelector(authSelectors.getSelectedPlaylist);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const selectedPlaylist = useSelector(playlistSelectors.getSelectedPlaylist);
   const authenticatedUserId = useSelector(authSelectors.getUser)?.userId;
 
   const isOwnerPlaylist =
@@ -54,6 +55,7 @@ const TrackComponent: FC<{ track: TrackDetails }> = ({
 
   return (
     <Card className="track-card">
+      {/********************************************Card Mefia (img + audio)*********************************************/}
       <div className="track-media-container">
         <a href={track?.external_urls.spotify} target="_blank">
           <CardMedia
@@ -73,6 +75,8 @@ const TrackComponent: FC<{ track: TrackDetails }> = ({
           )}
         </div>
       </div>
+
+      {/********************************************Content *********************************************/}
       <CardContent className="track-content">
         <div className="track-info">
           <Typography variant="h5" className="title" align="left">
@@ -95,6 +99,8 @@ const TrackComponent: FC<{ track: TrackDetails }> = ({
             )}
           </div>
         </div>
+
+        {/********************************************Delete icon *********************************************/}
         <div className="delete-icon">
           {isOwnerPlaylist && (
             <IconButton onClick={handleDeleteClick} color="error" size="large">
