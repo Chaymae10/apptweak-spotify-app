@@ -8,7 +8,11 @@ import {
   removeTrackFromPlaylistFailed,
   searchTracksByNameSuccess,
   searchTracksByNameFailed,
+  addTrackToPlaylistFailed,
+  addTrackToPlaylistSuccess,
 } from "./actions";
+
+import {getPlaylistDetailsRequest} from "../Playlist/actions"
 
 /**
  * Saga to get playlist tracks from the Spotify API.
@@ -131,8 +135,61 @@ function* watchSearchTracksByNameSaga() {
   yield takeEvery("track/searchTracksByNameRequest", searchTracksByNameSaga);
 }
 
+/**
+ * Saga to add track to a playlist.
+ * @param {Object} action - The Redux action with payload containing playlistId & trackURI.
+ */
+function* addTrackToPlaylistSaga(action: any): Generator<any, void, any> {
+  try {
+    const { playlistId, trackURI } = action.payload;
+    const accessToken = yield select(authSelectors.getAccessToken);  
+
+    const request = async () => {
+      const response = await axios.post(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        { uris: [trackURI] },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      return response.data;
+    };
+
+    const apiResponse: any = yield call(request);
+
+    if (apiResponse.snapshot_id) {
+      yield put(addTrackToPlaylistSuccess());
+      //refresh the list of the selected playlist
+      yield call(getPlaylistTracksSaga, { payload: { playlistId } });
+
+      // why do we have to refresh the details of the selected playlist?
+      // => by adding a track to a playlist, its snapshotId changes, so you have to refresh the data of the selected playlist
+      // => why here is important: to be able to delete a track from a playlist you must have the last snapshot
+      yield put(getPlaylistDetailsRequest({ playlistId }))
+    }
+  } catch (error: any) {
+    console.error("Error adding track to playlist:", error);
+    yield put(addTrackToPlaylistFailed({ message: error.message }));
+  }
+}
+
+/**
+ * Watcher saga that monitors the "track/addTrackToPlaylistRequest" action
+ * and triggers addTrackToPlaylistSaga accordingly.
+ */
+function* watchAddTrackToPlaylistSaga() {
+  yield takeEvery("track/addTrackToPlaylistRequest", addTrackToPlaylistSaga);
+}
+
+
+
 export {
   watchGetPlaylistTracksSaga,
   watchRemoveTrackFromPlaylistSaga,
   watchSearchTracksByNameSaga,
+  watchAddTrackToPlaylistSaga,
 };

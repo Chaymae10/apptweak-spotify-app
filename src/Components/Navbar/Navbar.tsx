@@ -3,22 +3,19 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import SearchBarComponent from "../SearchBarComponent/SearchBarComponent";
+import SearchBarComponent from "../SearchBar/SearchBar";
+import "./Navbar.css";
 
 const Navbar: FC = (): ReactElement => {
   return (
     <AppBar
       position="static"
-      style={{
-        backgroundClip: "#1db954",
-        backgroundColor: "#1db954",
-        marginRight: 50,
-      }}
+     className="appBar"
     >
       <Toolbar>
-        <Typography variant="h6">Spotify Logo</Typography>
+        <Typography variant="h6" >Spotify Logo</Typography>
 
-        <div style={{ width: 600, marginLeft: 50, marginRight: 50 }}>
+        <div className="searchBar">
           <SearchBarComponent />
         </div>
 
