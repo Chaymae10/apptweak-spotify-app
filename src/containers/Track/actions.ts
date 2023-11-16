@@ -43,3 +43,10 @@ export const searchTracksByNameFailed = createAction<ErrorPayload>(
 );
 
 export const clearSearchResults = createAction("CLEAR_SEARCH_RESULTS");
+
+export const addTrackToPlaylistRequest = createAction<{
+  playlistId: string;
+  trackURI: string;}>("track/addTrackToPlaylistRequest");
+export const addTrackToPlaylistSuccess = createAction("track/addTrackToPlaylistSuccess");
+export const addTrackToPlaylistFailed = createAction<ErrorPayload>("track/addTrackToPlaylistFailed");
+

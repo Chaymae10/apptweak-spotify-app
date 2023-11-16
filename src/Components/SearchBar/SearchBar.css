@@ -1,0 +1,9 @@
+.searchIcon {
+    color: gray;
+}
+
+.textField{
+    width: 100% !important;
+    background-color:white;
+    border-radius: 10 !important;
+}

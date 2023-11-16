@@ -1,0 +1,11 @@
+.appBar{
+    background-color:  #1db954 !important;
+    margin-right: 50,
+}
+
+
+.searchBar {
+    width: 600px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
