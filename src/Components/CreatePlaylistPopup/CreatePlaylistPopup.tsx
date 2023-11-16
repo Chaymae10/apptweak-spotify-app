@@ -69,6 +69,7 @@ const CreatePlaylistPopup: React.FC = () => {
             className="inputField"
             error={!!error}
             helperText={error}
+            color="secondary"
           />
           <TextField
             label="Playlist description (optional)"
