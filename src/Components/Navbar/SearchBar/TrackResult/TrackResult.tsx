@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Tooltip from "@mui/material/Tooltip";
-import { TrackDetails } from "../../../types/trackTypes";
+import { TrackDetails } from "../../../../types/trackTypes";
 import "./TrackResult.css";
 
 interface TrackResultProps {

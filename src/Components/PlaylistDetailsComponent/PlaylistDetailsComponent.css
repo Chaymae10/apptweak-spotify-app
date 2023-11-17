@@ -1,6 +1,6 @@
 .playlist-card {
     display: flex;
-    background: rgba(112, 110, 121, 0.168) !important; /* Dégradé de gauche à droite */
+    background: rgba(112, 110, 121, 0.168) !important; 
     color: #1f1f1f;
     border-radius: 10px;
     overflow: hidden;
