@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Tooltip from "@mui/material/Tooltip";
-import { TrackDetails } from "../../types/trackTypes";
+import { TrackDetails } from "../../../types/trackTypes";
 import "./TrackResult.css";
 
 interface TrackResultProps {
@@ -15,7 +15,11 @@ interface TrackResultProps {
   isOwnerPlaylist: boolean;
 }
 
-const TrackResult: React.FC<TrackResultProps> = ({ trackFound, handleClick, isOwnerPlaylist }) => (
+const TrackResult: React.FC<TrackResultProps> = ({
+  trackFound,
+  handleClick,
+  isOwnerPlaylist,
+}) => (
   <Card className="track-card">
     <CardMedia
       component="img"
@@ -33,7 +37,10 @@ const TrackResult: React.FC<TrackResultProps> = ({ trackFound, handleClick, isOw
         </Typography>
       </div>
       <div className="option-add-button">
-        <Tooltip arrow title={isOwnerPlaylist ? "" : "You cannot add track to this playlist"}>
+        <Tooltip
+          arrow
+          title={isOwnerPlaylist ? "" : "You cannot add track to this playlist"}
+        >
           <span>
             <IconButton
               style={{ color: isOwnerPlaylist ? "#6e50c2" : "gray" }}

@@ -6,7 +6,7 @@ import {
   searchTracksByNameRequest,
   clearSearchResults,
 } from "../../containers/Track/actions";
-import TrackResult from "../TrackResult/TrackResult";
+import TrackResult from "./TrackResult/TrackResult";
 import SearchIcon from "@mui/icons-material/Search";
 import { trackSelectors } from "../../containers/Track/selectors";
 import Typography from "@mui/material/Typography";
