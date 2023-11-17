@@ -12,10 +12,12 @@ import PlaylistComponent from "./Components/SelectorPlaylists/SelectorPlaylists"
 import TrackList from "./Components/TrackList/TrackList";
 import Navbar from "./Components/Navbar/Navbar";
 import {playlistSelectors} from "./containers/Playlist/selectors";
+import PlaylistDetailsss from "./Components/PlaylistDetailsComponent/PlaylistDetailsComponent"; // Assurez-vous que le chemin est correct
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
   const playlists = useSelector(playlistSelectors.getPlaylists);
+  const selectedPlaylist = useSelector(playlistSelectors.getSelectedPlaylist);
   const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
@@ -69,7 +71,12 @@ const App: FC = (): ReactElement => {
           <CircularProgress color="secondary" />
         </div>
       )}
-      {!showSpinner && <TrackList />}
+      {!showSpinner && selectedPlaylist && (
+        <>
+          <PlaylistDetailsss playlist={selectedPlaylist} />
+          <TrackList />
+        </>
+      )}
     </div>
   );
 };
