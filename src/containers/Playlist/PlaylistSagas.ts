@@ -80,18 +80,6 @@ function* getUserPlaylistsSaga(): Generator<any, void, any> {
     yield put(getUserPlaylistsSuccess(playlists.data));
   } catch (error: any) {
     console.error("Error fetching playlists:", error);
-
-    if (error.response) {
-      console.error("Réponse du serveur :", error.response.data);
-      console.error("Statut de la réponse :", error.response.status);
-    } else if (error.request) {
-      // La requête a été faite mais aucune réponse n'a été reçue
-      console.error("Aucune réponse reçue");
-    } else {
-      // Une erreur s'est produite lors de la configuration de la requête
-      console.error("Erreur de configuration de la requête :", error.message);
-    }
-
     yield put(getUserPlaylistsFailed({ message: error.message }));
   }
 }
@@ -122,7 +110,7 @@ function* getPlaylistDetailsSaga(action: any): Generator<any, void, any> {
     yield put(getPlaylistDetailsSuccess(playlistDetails.data));
   } catch (error: any) {
     console.error(
-      "Erreur lors de la récupération des détails de la playlist :",
+      "Error fetching playlist details :",
       error
     );
 

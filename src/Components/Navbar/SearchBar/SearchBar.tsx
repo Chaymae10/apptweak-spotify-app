@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   searchTracksByNameRequest,
   clearSearchResults,
-} from "../../containers/Track/actions";
-import TrackResult from "../TrackResult/TrackResult";
+} from "../../../containers/Track/actions";
+import TrackResult from "./TrackResult/TrackResult";
 import SearchIcon from "@mui/icons-material/Search";
-import { trackSelectors } from "../../containers/Track/selectors";
+import { trackSelectors } from "../../../containers/Track/selectors";
 import Typography from "@mui/material/Typography";
-import { playlistSelectors } from "../../containers/Playlist/selectors";
-import { addTrackToPlaylistRequest } from "../../containers/Track/actions";
-import { Track, TrackDetails } from "../../types/trackTypes";
+import { playlistSelectors } from "../../../containers/Playlist/selectors";
+import { addTrackToPlaylistRequest } from "../../../containers/Track/actions";
+import { Track, TrackDetails } from "../../../types/trackTypes";
 import { useEffect } from "react";
-import { authSelectors } from "../../containers/auth/selectors";
+import { authSelectors } from "../../../containers/auth/selectors";
 import "./SearchBar.css";
 
 const SearchBarComponent: FC = (): ReactElement => {

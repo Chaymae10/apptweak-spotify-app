@@ -1,3 +1,27 @@
 .list-tracker {
     margin: 3vw 20vh !important;
 }
+
+.btn-filter{
+    display: flex; 
+    justify-content: flex-end;
+     margin-bottom: 10px;
+}
+
+.alert{
+    background-color: #8673b92b !important;
+    color: black !important ;
+    font-size: 16px !important;
+}
+
+.btns-filter{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+}

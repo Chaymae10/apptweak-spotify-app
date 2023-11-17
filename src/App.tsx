@@ -1,75 +1,82 @@
 import React, { FC, ReactElement, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserPlaylistsRequest,
-  setSelectedPlaylist,
-} from "./containers/Playlist/actions";
+import { getUserPlaylistsRequest, setSelectedPlaylist } from "./containers/Playlist/actions";
 import { getPlaylistTracksRequest } from "./containers/Track/actions";
-import { authSelectors } from "./containers/auth/selectors";
 import CircularProgress from "@mui/material/CircularProgress";
-import CreatePlaylistPopup from "./Components/CreatePlaylistPopup/CreatePlaylistPopup";
-import PlaylistComponent from "./Components/SelectorPlaylists/SelectorPlaylists";
-import TrackList from "./Components/TrackList/TrackList";
 import Navbar from "./Components/Navbar/Navbar";
-import {playlistSelectors} from "./containers/Playlist/selectors";
+import CreatePlaylistPopup from "./Components/CreatePlaylistPopup/CreatePlaylistPopup";
+import SelectorPlaylists from "./Components/SelectorPlaylists/SelectorPlaylists";
+import TrackList from "./Components/TrackList/TrackList";
+import PlaylistDetails from "./Components/PlaylistDetailsComponent/PlaylistDetailsComponent";
+import { playlistSelectors } from "./containers/Playlist/selectors";
+import Alert from "@mui/material/Alert";
+
+import "./App.css";
 
 const App: FC = (): ReactElement => {
   const dispatch = useDispatch();
   const playlists = useSelector(playlistSelectors.getPlaylists);
+  const selectedPlaylist = useSelector(playlistSelectors.getSelectedPlaylist);
   const [showSpinner, setShowSpinner] = useState(true);
 
+  // Effect to fetch user playlists
   useEffect(() => {
-    // Récupérez les playlists
     dispatch(getUserPlaylistsRequest());
   }, [dispatch]);
 
+  // Effect to set the selected playlist and fetch its tracks
   useEffect(() => {
     if (playlists.items.length > 0) {
       const nonEmptyPlaylist = playlists.items.find(
-        (playlist) =>
-          playlist.tracks &&
-          playlist.tracks.total !== undefined &&
-          playlist.tracks.total > 0
+        (playlist) => playlist.tracks && playlist.tracks.total !== undefined && playlist.tracks.total > 0
       );
 
       if (nonEmptyPlaylist && nonEmptyPlaylist.id) {
-       dispatch(setSelectedPlaylist(nonEmptyPlaylist));
+        dispatch(setSelectedPlaylist(nonEmptyPlaylist));
         dispatch(getPlaylistTracksRequest({ playlistId: nonEmptyPlaylist.id }));
+      } else {
+        dispatch(setSelectedPlaylist(playlists.items[0]));
       }
     }
   }, [dispatch, playlists]);
 
+  // Effect to hide the loading spinner after 3 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSpinner(false);
     }, 3000);
 
+    // Clear the timer if the component unmounts
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        minHeight: "100vh",
-      }}
-    >
+    <div className="app-container">
       <Navbar />
       <CreatePlaylistPopup />
-      <PlaylistComponent />
+      <SelectorPlaylists />
+
+      {/* Display loading spinner if data is still loading */}
       {showSpinner && (
-        <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <CircularProgress color="success" />
+        <div className="spinner-container">
+          <CircularProgress color="secondary" />
         </div>
       )}
-      {!showSpinner && <TrackList />}
+
+      {/* Display Playlist Details and Track List if there's a selected playlist */}
+      {!showSpinner && selectedPlaylist && (
+        <>
+          <PlaylistDetails playlist={selectedPlaylist} />
+          <TrackList />
+        </>
+      )}
+
+      {/* Display an alert if there are no playlists */}
+      {!showSpinner && playlists.items.length === 0 && (
+        <Alert icon={false} className="alert">
+          Welcome! Don't forget to create a playlist.
+        </Alert>
+      )}
     </div>
   );
 };
