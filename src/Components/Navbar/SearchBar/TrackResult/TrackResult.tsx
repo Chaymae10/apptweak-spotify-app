@@ -39,7 +39,7 @@ const TrackResult: React.FC<TrackResultProps> = ({
       <div className="option-add-button">
         <Tooltip
           arrow
-          title={isOwnerPlaylist ? "" : "You cannot add track to this playlist"}
+          title={isOwnerPlaylist ? "" : "You cannot add track"}
         >
           <span>
             <IconButton
