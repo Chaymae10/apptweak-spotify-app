@@ -9,7 +9,7 @@ import "./TrackComponent.css";
 import ReactH5AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { TrackDetails } from "../../types/trackTypes";
-import DeleteConfirmationDialog from "../DeleteConfirmationPopup/DeleteConfirmationPopup";
+import DeleteConfirmationDialog from "./DeleteConfirmationPopup/DeleteConfirmationPopup";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
 import { removeTrackFromPlaylistRequest } from "../../containers/Track/actions";

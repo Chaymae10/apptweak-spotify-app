@@ -1,0 +1,11 @@
+.filterButton {
+    background-color: #6e50c2 !important;
+    color: white;
+    margin-left:15px !important;
+}
+
+.autocomplete{
+    width: 200px ;
+    margin-bottom:8px;
+}
+  

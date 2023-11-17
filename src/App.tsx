@@ -66,7 +66,7 @@ const App: FC = (): ReactElement => {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <CircularProgress color="success" />
+          <CircularProgress color="secondary" />
         </div>
       )}
       {!showSpinner && <TrackList />}
