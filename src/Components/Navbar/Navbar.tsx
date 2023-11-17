@@ -1,9 +1,7 @@
 import React, { FC, ReactElement } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import SearchBarComponent from "../SearchBar/SearchBar";
+import SearchBarComponent from "./SearchBar/SearchBar";
 import "./Navbar.css";
 import logo  from "../../img/logo.png";
 
@@ -20,10 +18,6 @@ const Navbar: FC = (): ReactElement => {
         <div className="searchBar">
           <SearchBarComponent />
         </div>
-
-        <Button color="inherit" style={{ marginLeft: "auto" }}>
-          Your Button
-        </Button>
       </Toolbar>
     </AppBar>
   );

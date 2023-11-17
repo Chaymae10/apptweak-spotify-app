@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useState, useEffect } from "react";
 import List from "@mui/material/List";
 import Alert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
-import TrackComponent from "../TrackComponent/TrackComponent";
+import TrackComponent from "./TrackComponent/TrackComponent";
 import FilteredArtists from "./FilterTracksByArtistNameButton/FilterTracksByArtistNameButton";
 import SortMenu from "./SortTracksButton/SortTracksButton";
 import { useSelector } from "react-redux";

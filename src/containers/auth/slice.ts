@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RequestStatus } from "../../types/requests";
-import { AuthState, AccessTokenPayload } from "../../types/requests";
+import { AccessTokenPayload } from "../../types/requests";
+import { AuthState } from "../../types/userTypes";
 import {
   getUser,
   getUserFailed,

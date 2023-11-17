@@ -34,6 +34,7 @@ const playlistSlice = createSlice({
     ) => {
       state.selectedPlaylist = action.payload;
     },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -44,6 +45,8 @@ const playlistSlice = createSlice({
         state.status = RequestStatus.SUCCESS;
         state.playlistCollection.items.push(action.payload);
         state.error = undefined;
+        state.selectedPlaylist = action.payload;
+        console.log(action.payload);
       })
       .addCase(createPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
