@@ -45,7 +45,7 @@ const SelectorPlaylists: FC = (): ReactElement => {
         getOptionLabel={(option) => option.name}
         renderInput={(params) => (
           <TextField
-            color="success"
+            color="secondary"
             {...params}
             label="Select a playlist"
             variant="outlined"
