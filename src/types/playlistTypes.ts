@@ -24,7 +24,7 @@ export interface PlaylistCollection {
 
   export interface Playlist {
     collaborative: boolean;
-    description: string;
+    description?: string;
     external_urls: {
       spotify: string;
     };

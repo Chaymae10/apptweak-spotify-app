@@ -3,7 +3,9 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import "./CreatePlaylistPopup.css";
-import { createPlaylistRequest, setSelectedPlaylist} from "../../containers/Playlist/actions";
+import {
+  createPlaylistRequest,
+} from "../../containers/Playlist/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelectors } from "../../containers/auth/selectors";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
@@ -20,7 +22,7 @@ const CreatePlaylistPopup: React.FC = () => {
   const playlistData = {
     userId: user?.userId || "",
     name: playlistName,
-    description: playlistDescription,
+    description: playlistDescription || "",
   };
 
   const openModal = () => {
