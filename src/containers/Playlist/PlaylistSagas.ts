@@ -7,8 +7,7 @@ import {
   getPlaylistDetailsSuccess,
   getPlaylistDetailsFailed,
   createPlaylistFailed,
-  createPlaylistSuccess
-
+  createPlaylistSuccess,
 } from "../../containers/Playlist/actions";
 
 /**
@@ -20,16 +19,17 @@ function* createPlaylistSaga(action: any): Generator<any, void, any> {
   try {
     const { userId, name, description } = action.payload;
 
-    // Utilisez yield pour invoquer la fonction select
     const accessToken = yield select(authSelectors.getAccessToken);
 
     const request = async () => {
       const response = await axios.post(
         `https://api.spotify.com/v1/users/${userId}/playlists`,
         {
-          name,
-          description,
-          public: false,
+          
+            name: name,
+            description: description,
+            public: false,
+          
         },
         {
           headers: {
@@ -38,13 +38,13 @@ function* createPlaylistSaga(action: any): Generator<any, void, any> {
           },
         }
       );
-
+    
       return response.data;
     };
 
-    const playlistData: any = yield call(request);
-
-    yield put(createPlaylistSuccess(playlistData));
+    const playlistCreated: any = yield call(request);
+    
+    yield put(createPlaylistSuccess(playlistCreated));
     // Invoke getUserPlaylistsSaga to refresh the user's playlists
     yield call(getUserPlaylistsSaga);
   } catch (error: any) {
@@ -109,10 +109,7 @@ function* getPlaylistDetailsSaga(action: any): Generator<any, void, any> {
 
     yield put(getPlaylistDetailsSuccess(playlistDetails.data));
   } catch (error: any) {
-    console.error(
-      "Error fetching playlist details :",
-      error
-    );
+    console.error("Error fetching playlist details :", error);
 
     yield put(getPlaylistDetailsFailed({ message: error.message }));
   }

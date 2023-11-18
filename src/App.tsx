@@ -31,21 +31,28 @@ const App: FC = (): ReactElement => {
     dispatch(getUserPlaylistsRequest());
   }, [dispatch]);
 
-  // Effect to set the selected playlist and fetch its tracks
-  useEffect(() => {
-    if (playlists.items.length > 0) {
-      const nonEmptyPlaylist = playlists.items.find(
-        (playlist) =>
-          playlist.tracks &&
-          playlist.tracks.total !== undefined &&
-          playlist.tracks.total > 0
-      );
 
-      if (nonEmptyPlaylist && nonEmptyPlaylist.id && !selectedPlaylist) {
-        dispatch(setSelectedPlaylist(nonEmptyPlaylist));
-      }
+  // Effect to set the selected playlist and fetch its tracks
+useEffect(() => {
+  if (playlists.items.length > 0) {
+    const nonEmptyPlaylist = playlists.items.find(
+      (playlist) =>
+        playlist.tracks &&
+        playlist.tracks.total !== undefined &&
+        playlist.tracks.total > 0
+    );
+
+    // If found, set it as the selected playlist and fetch its tracks
+    if (nonEmptyPlaylist && !selectedPlaylist) {
+      dispatch(setSelectedPlaylist(nonEmptyPlaylist));
+      dispatch(getPlaylistTracksRequest({ playlistId: nonEmptyPlaylist.id }));
+    } else {
+      // If no playlist has tracks, select the first playlist
+      dispatch(setSelectedPlaylist(playlists.items[0]));
     }
-  }, [dispatch, playlists]);
+  }
+}, [dispatch, playlists]);
+
 
   // Effect to hide the loading spinner after 3 seconds
   useEffect(() => {

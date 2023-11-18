@@ -38,16 +38,12 @@ const playlistSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createPlaylistRequest, (state) => {
-        state.status = RequestStatus.PENDING;
-      })
-      .addCase(createPlaylistSuccess, (state, action) => {
+     .addCase(createPlaylistSuccess, (state, action) => {
         state.status = RequestStatus.SUCCESS;
         state.playlistCollection.items.push(action.payload);
-        state.error = undefined;
         state.selectedPlaylist = action.payload;
-        console.log(action.payload);
-      })
+        state.error = undefined;
+            })
       .addCase(createPlaylistFailed, (state, action) => {
         state.status = RequestStatus.ERROR;
         state.error = action.payload.message;
